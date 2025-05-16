@@ -1,14 +1,16 @@
-import React from 'react';
-import JobForm from './components/JobForm';
-import JobList from './components/JobList';
+import React from "react";
+import {Routes, Route} from 'react-router-dom';
+import Home from "./components/Home";
+import JobForm from "./components/JobForm";
+import JobList from "./components/JobList";
 
 const App = () => {
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto' }}>
-      <h1>Job Application Tracker</h1>
-      <JobForm />
-      <JobList />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/add-job" element={<JobForm />} />
+      <Route path="/jobs" element={<JobList />} />
+    </Routes>
   );
 };
 

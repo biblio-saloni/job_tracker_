@@ -12,11 +12,22 @@ const initialState = [
 
 const jobsSlice = createSlice({
   name: "jobs",
-  initialState,
+  initialState: {
+    jobs: [
+      {
+        id: "1",
+        company: "Google",
+        position: "SWE",
+        status: "Rejected",
+        date: "2024-12-19",
+      },
+    ],
+    currentJob: null,
+  },
   reducers: {
     addJob: {
       reducer(state, action) {
-        state.push(action.payload);
+        state.jobs.push(action.payload);
       },
       prepare(job) {
         return {
@@ -28,16 +39,24 @@ const jobsSlice = createSlice({
       },
     },
     deleteJob(state, action) {
-      return state.filter((job) => job.id !== action.payload);
+      state.jobs = state.jobs.filter((job) => job.id !== action.payload);
     },
     updateJob(state, action) {
-      const index = state.findIndex((job) => job.id === action.payload.id);
+      const updatedJob = action.payload;
+      const index = state.jobs.findIndex((job) => job.id === updatedJob.id);
       if (index !== -1) {
-        state[index] = action.payload;
+        state.jobs[index] = updatedJob;
       }
+    },
+    setCurrentJob(state, action) {
+      state.currentJob = action.payload;
+    },
+    clearCurrentJob(state) {
+      state.currentJob = null;
     },
   },
 });
 
-export const { addJob, deleteJob, updateJob} = jobsSlice.actions;
+export const { addJob, deleteJob, updateJob, setCurrentJob, clearCurrentJob } =
+  jobsSlice.actions;
 export default jobsSlice.reducer;
